@@ -1,6 +1,7 @@
 package com.example.todoApp.controller;
 
 import com.example.todoApp.dto.UserDTO;
+import com.example.todoApp.dto.UserDeleteDTO;
 import com.example.todoApp.model.User;
 import com.example.todoApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ public class UserController {
     @PostMapping("/register")
     public User userRegister(@RequestBody UserDTO userDTO) {
         return userService.userRegister(userDTO);
+    }
+
+    @DeleteMapping("/delete-user")
+    public String deleteUser(@RequestBody UserDTO userDTO) {
+        return userService.deleteUser(userDTO);
     }
 }

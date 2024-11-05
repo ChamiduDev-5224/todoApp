@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,18 +22,23 @@ public class UserService {
 
     public List<UserDTO> getAllUsers(){
         List<User>userList = userRepository.findAll();
-        return modelMapper.map(userList, new TypeToken<List<UserDTO>>() {}.getType());
+
+        List<UserDTO> userDtoList = modelMapper.map(userList, new TypeToken<List<UserDTO>>() {}.getType());
+        return userDtoList;
     }
 
-    public User userRegister(UserDTO userDTO){
-
-        User userEntity = new User();
-        userEntity.setEmail(userDTO.getEmail());
-        userEntity.setPassword(userDTO.getPassword());
-        userEntity = userRepository.save(userEntity);
-
-        return userEntity;
+    public User userRegister(UserDTO userDTO) {
+        User user = new User();
+        user = userRepository.save(modelMapper.map(userDTO, User.class));
+        return user;
     }
+
+    public String deleteUser(UserDTO userDTO) {
+        userRepository.delete(modelMapper.map(userDTO,User.class));
+        return "Successfully deleted User";
+
+    }
+
 }
 
 
