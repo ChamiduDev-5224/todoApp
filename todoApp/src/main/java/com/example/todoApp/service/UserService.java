@@ -39,6 +39,19 @@ public class UserService {
 
     }
 
+    public String updateUser(Integer id, UserDTO userDTO) {
+        User user = userRepository.findById(id).get();
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+
+        return "User successfully updated";
+    }
+
+    public String deleteById(Integer id){
+        userRepository.deleteById(id);
+        return "Successfully deleted User";
+}
+
 }
 
 
